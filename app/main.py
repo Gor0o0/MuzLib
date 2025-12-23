@@ -1,11 +1,18 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Request, Depends
+from fastapi.templating import Jinja2Templates
+from fastapi.responses import HTMLResponse
 from sqlalchemy.orm import Session
-from app.database import Base, engine, SessionLocal
-from app import crud, schemas
 
+from app.database import Base, engine, SessionLocal
+from app import crud, models
+
+# Создаём таблицы
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+templates = Jinja2Templates(directory="templates")
+
 
 def get_db():
     db = SessionLocal()
@@ -14,14 +21,11 @@ def get_db():
     finally:
         db.close()
 
-@app.get("/")
-def read_root():
-    return {"message": "Hello, FastAPI + PostgreSQL!"}
 
-@app.post("/users/", response_model=schemas.UserRead)
-def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
-    return crud.create_user(db, user)
-
-@app.get("/users/", response_model=list[schemas.UserRead])
-def read_users(db: Session = Depends(get_db)):
-    return crud.get_users(db)
+@app.get("/", response_class=HTMLResponse)
+def index(request: Request, db: Session = Depends(get_db)):
+    songs = crud.get_songs(db)
+    return templates.TemplateResponse("index.html", {
+        "request": request,
+        "songs": songs
+    })

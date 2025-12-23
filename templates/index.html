@@ -1,0 +1,10 @@
+<tbody>
+{% for song in songs %}
+<tr>
+    <td class="col-title">{{ song.title }}</td>
+    <td>{{ song.artist }}</td>
+    <td><span class="pill-small">{{ song.playlist }}</span></td>
+    <td align="right" class="duration">{{ song.duration }}</td>
+</tr>
+{% endfor %}
+</tbody>

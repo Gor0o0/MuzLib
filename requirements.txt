@@ -3,4 +3,6 @@ uvicorn
 sqlalchemy
 psycopg2-binary
 python-dotenv
+jinja2
+python-multipart
 gunicorn
