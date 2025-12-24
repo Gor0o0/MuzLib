@@ -24,7 +24,7 @@ def get_db():
 
 @app.get("/", response_class=HTMLResponse)
 def index(request: Request, db: Session = Depends(get_db)):
-    songs = crud.get_songs(db)
+    songs = db.query(Song).all()
     return templates.TemplateResponse("index.html", {
         "request": request,
         "songs": songs
