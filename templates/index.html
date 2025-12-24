@@ -1,10 +1,24 @@
-<tbody>
-{% for song in songs %}
-<tr>
-    <td>{{ song.title }}</td>
-    <td>{{ song.artist }}</td>
-    <td><span class="pill-small">{{ song.playlist }}</span></td>
-    <td align="right">{{ song.duration }}</td>
-</tr>
-{% endfor %}
-</tbody>
+<link rel="stylesheet" href="/static/style.css">
+
+<h1>🎵 MuzLib — Моя музыкальная библиотека</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Название</th>
+            <th>Исполнитель</th>
+            <th>Плейлист</th>
+            <th>Длительность</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for song in songs %}
+        <tr>
+            <td>{{ song.title }}</td>
+            <td>{{ song.artist }}</td>
+            <td><span class="pill-small">{{ song.playlist }}</span></td>
+            <td align="right">{{ song.duration }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
