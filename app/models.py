@@ -9,3 +9,11 @@ class Song(Base):
     artist = Column(String, nullable=False)
     playlist = Column(String, nullable=False)
     duration = Column(String, nullable=False)
+
+class Playlist(Base):
+    __tablename__ = "playlists"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, nullable=False)
+    description = Column(String)
+    created_at = Column(String)
