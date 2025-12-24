@@ -4,7 +4,7 @@ from fastapi.responses import HTMLResponse
 from sqlalchemy.orm import Session
 
 from app.database import Base, engine, SessionLocal
-from app.models import Song   # ✅ импортируем модель Song
+from app.models import Song, Playlist   # ✅ импортируем обе модели
 
 # Создаём таблицы (если их ещё нет)
 Base.metadata.create_all(bind=engine)
@@ -25,11 +25,13 @@ def get_db():
         db.close()
 
 
-# Главная страница — вывод песен из базы
+# Главная страница — вывод песен и плейлистов из базы
 @app.get("/", response_class=HTMLResponse)
 def index(request: Request, db: Session = Depends(get_db)):
-    songs = db.query(Song).all()   # ✅ теперь Song импортирован
+    songs = db.query(Song).all()         # ✅ список песен
+    playlists = db.query(Playlist).all() # ✅ список плейлистов
     return templates.TemplateResponse("index.html", {
         "request": request,
-        "songs": songs
+        "songs": songs,
+        "playlists": playlists
     })
